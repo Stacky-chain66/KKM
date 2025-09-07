@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Parisienne&family=Inter:wght@400;700&display=swap');
+
+        :root {
+            --pink: #ffc0cb;
+            --red: #ff6347;
+            --purple: #8a2be2;
+            --golden-glow: #ffd700;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #f0e6f2 0%, #ffe6f0 50%, #e6f2ff 100%);
+            color: #4b0082;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💖</text></svg>") 16 16, auto;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .love-section {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Heart Animations --- */
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff69b4;
+            opacity: 0;
+            animation: fall 15s linear infinite;
+            pointer-events: none;
+        }
+        
+        /* --- Glow Animations --- */
+        @keyframes glowing-text {
+            0%, 100% { text-shadow: 0 0 5px var(--pink), 0 0 10px var(--pink), 0 0 15px var(--pink); }
+            50% { text-shadow: 0 0 10px var(--red), 0 0 20px var(--red), 0 0 30px var(--red); }
+        }
+
+        .glow-text {
+            animation: glowing-text 3s infinite alternate;
+        }
+
+        /* --- Sparkle Effect --- */
+        .sparkle-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+            opacity: 0;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Love Notes --- */
+        .love-note {
+            transition: transform 0.5s ease-in-out;
+            cursor: pointer;
+        }
+        .love-note:hover {
+            transform: translateY(-10px);
+        }
+
+        /* --- Quiz Feedback --- */
+        .feedback {
+            transition: opacity 0.5s ease;
+        }
+        .correct { color: #28a745; }
+        .incorrect { color: #dc3545; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-red-100">
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Modal for Secret Messages -->
+    <div id="secret-message-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+        <div class="bg-white p-8 rounded-xl shadow-xl border-2 border-red-300 relative max-w-sm w-full">
+            <span onclick="closeModal()" class="absolute top-2 right-4 text-4xl cursor-pointer text-red-500 hover:text-red-700">&times;</span>
+            <p id="secret-message-text" class="text-xl font-bold text-center"></p>
+        </div>
+    </div>
+
+    <!-- Section 1: Grand Welcome -->
+    <section id="welcome" class="love-section bg-gradient-to-br from-pink-100 via-purple-100 to-red-100">
+        <div class="w-full max-w-3xl p-8 bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl border-4 border-white">
+            <h1 class="text-6xl md:text-8xl font-bold text-pink-500 glow-text drop-shadow-lg">Happy Birthday My Love ❤️</h1>
+            <p class="text-xl md:text-2xl mt-4 font-bold text-purple-600">The most wonderful person in my life deserves all the love in this universe.</p>
+            <button onclick="startJourney()" class="mt-8 px-8 py-4 bg-gradient-to-r from-red-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:from-red-500 hover:to-pink-600 transition-all">
+                Begin Our Story
+            </button>
+        </div>
+        <div class="sparkle-container"></div>
+        <div class="hearts-container"></div>
+    </section>
+
+    <!-- Section 2: Our Love Story -->
+    <section id="story" class="love-section bg-gradient-to-br from-purple-100 to-pink-100 hidden">
+        <h2 class="text-6xl md:text-7xl font-bold text-red-500 drop-shadow-lg mb-8">Our Love Story</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
+            <!-- Love Note 1 -->
+            <div class="love-note bg-white p-6 rounded-xl shadow-lg border-2 border-purple-300 flex flex-col justify-center text-center">
+                <span class="text-5xl mb-4">✨</span>
+                <h3 class="text-3xl text-purple-500 font-bold">My baby..</h3>
+                <p class="mt-2 text-lg text-gray-700 font-['Parisienne']">Every day talking with you is better than the last. You make me fall in love with you over and over again. Forever and always, my love.</p>
+            </div>
+            <!-- Love Note 2 -->
+            <div class="love-note bg-white p-6 rounded-xl shadow-lg border-2 border-pink-300 flex flex-col justify-center text-center">
+                <span class="text-5xl mb-4">💕</span>
+                <h3 class="text-3xl text-red-500 font-bold">Meri jaan..</h3>
+                <p class="mt-2 text-lg text-gray-700 font-['Parisienne']">Every moment we've shared feels like a page from the most beautiful book. Thank you for filling my life with so much joy and laughter.</p>
+            </div>
+            <!-- Love Note 3 -->
+            <div class="love-note bg-white p-6 rounded-xl shadow-lg border-2 border-red-300 flex flex-col justify-center text-center">
+                <span class="text-5xl mb-4">💖</span>
+                <h3 class="text-3xl text-pink-500 font-bold">Cutie Pie..</h3>
+                <p class="mt-2 text-lg text-gray-700 font-['Parisienne']">The most magical part of my life is sharing it with you. Here's to more adventures, more laughter, and more love!</p>
+            </div>
+        </div>
+        <button onclick="document.getElementById('quiz').scrollIntoView(); showSection('quiz');" class="mt-8 px-8 py-4 bg-gradient-to-r from-red-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:from-red-500 hover:to-pink-600 transition-all">
+            Unlock the Next Surprise
+        </button>
+        <div onclick="showSecretMessage('You are my sun, my moon, and all my stars. 💖')" class="cursor-pointer text-6xl mt-8 animate-pulse">
+            ❤️
+        </div>
+    </section>
+
+    <!-- Section 3: The Love Quiz -->
+    <section id="quiz" class="love-section bg-gradient-to-br from-purple-100 to-pink-100 hidden">
+        <h2 class="text-6xl md:text-7xl font-bold text-red-500 drop-shadow-lg mb-8">The Love Quiz</h2>
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border-4 border-white w-full max-w-lg">
+            <h3 class="text-3xl font-bold text-purple-500 mb-4">A Little Test of Love</h3>
+            <div id="quiz-container">
+                <!-- Question 1 -->
+                <div id="quiz-q1">
+                    <p class="text-xl text-gray-700 mb-6">
+                        Where we met first Alone?
+                    </p>
+                    <form id="quiz-form-1">
+                        <input type="text" id="answer-input-1" placeholder="Type your answer here..." class="w-full p-4 rounded-xl border-2 border-pink-300 focus:outline-none focus:border-red-400 text-lg">
+                        <button type="submit" class="w-full mt-6 px-8 py-4 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:from-purple-500 hover:to-pink-600 transition-all">
+                            Submit Answer
+                        </button>
+                    </form>
+                    <div class="quiz-messages mt-4">
+                        <p class="quiz-success text-2xl font-bold hidden feedback correct">You got it! My love for you is as strong as that coffee was. ❤️</p>
+                        <p class="quiz-failure text-2xl font-bold hidden feedback incorrect">Hmm, that doesn't seem right. Try again! 🤔</p>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div id="quiz-q2" class="hidden">
+                    <p class="text-xl text-gray-700 mb-6">
+                        Our favourite Ed sheeran song?
+                    </p>
+                    <form id="quiz-form-2">
+                        <input type="text" id="answer-input-2" placeholder="Type your answer here..." class="w-full p-4 rounded-xl border-2 border-pink-300 focus:outline-none focus:border-red-400 text-lg">
+                        <button type="submit" class="w-full mt-6 px-8 py-4 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:from-purple-500 hover:to-pink-600 transition-all">
+                            Submit Answer
+                        </button>
+                    </form>
+                    <div class="quiz-messages mt-4">
+                        <p class="quiz-success text-2xl font-bold hidden feedback correct">That's the one! It's our song. 😊</p>
+                        <p class="quiz-failure text-2xl font-bold hidden feedback incorrect">Wrong song! Our song is waiting for you. Try again! 🤔</p>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div id="quiz-q3" class="hidden">
+                    <p class="text-xl text-gray-700 mb-6">
+                        What is the most wanted thing we both want badly?
+                    </p>
+                    <form id="quiz-form-3">
+                        <input type="text" id="answer-input-3" placeholder="Type your answer here..." class="w-full p-4 rounded-xl border-2 border-pink-300 focus:outline-none focus:border-red-400 text-lg">
+                        <button type="submit" class="w-full mt-6 px-8 py-4 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:from-purple-500 hover:to-pink-600 transition-all">
+                            Unlock Your Surprise
+                        </button>
+                    </form>
+                    <div class="quiz-messages mt-4">
+                        <p class="quiz-success text-2xl font-bold hidden feedback correct">Bingo! We share same mindset... ❤️</p>
+                        <p class="quiz-failure text-2xl font-bold hidden feedback incorrect">Not quite! The memory is waiting for you to unlock it. Try again! 🤔</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Future Together -->
+    <section id="future" class="love-section bg-gradient-to-br from-pink-100 to-red-100 hidden">
+        <h2 class="text-6xl md:text-7xl font-bold text-purple-700 drop-shadow-lg z-10">Our Future Together</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+             <!-- Bubble 1 -->
+            <div class="love-note p-6 bg-purple-300/50 backdrop-blur-md rounded-full flex items-center justify-center p-4 shadow-lg text-lg text-white">
+                <span class="font-bold">Travel the world 🌍</span>
+            </div>
+            <!-- Bubble 2 -->
+            <div class="love-note p-6 bg-pink-300/50 backdrop-blur-md rounded-full flex items-center justify-center p-4 shadow-lg text-lg text-white">
+                <span class="font-bold">Forever us 💕</span>
+            </div>
+            <!-- Bubble 3 -->
+            <div class="love-note p-6 bg-red-300/50 backdrop-blur-md rounded-full flex items-center justify-center p-4 shadow-lg text-lg text-white">
+                <span class="font-bold">Dream house 🏡</span>
+            </div>
+             <!-- Bubble 4 -->
+            <div class="love-note p-6 bg-red-300/50 backdrop-blur-md rounded-full flex items-center justify-center p-4 shadow-lg text-lg text-white">
+                <span class="font-bold">Our strong bond✨ </span>
+            </div>
+             <!-- Bubble 5 -->
+            <div class="love-note p-6 bg-red-300/50 backdrop-blur-md rounded-full flex items-center justify-center p-4 shadow-lg text-lg text-white">
+                <span class="font-bold">Lot's of money🤑 </span>
+            </div>
+            <!-- Bubble 6 -->
+            <div class="love-note p-6 bg-red-300/50 backdrop-blur-md rounded-full flex items-center justify-center p-4 shadow-lg text-lg text-white">
+                <span class="font-bold">Lot's of Romance❤️ </span>
+            </div>
+
+        </div>
+        <button onclick="document.getElementById('finale').scrollIntoView(); showSection('finale');" class="mt-8 px-8 py-4 bg-gradient-to-r from-red-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:from-red-500 hover:to-pink-600 transition-all">
+            The Final Surprise...
+        </button>
+        <div onclick="showSecretMessage('I can\'t wait to make all our dreams come true with you. ✨')" class="cursor-pointer text-6xl mt-8 animate-pulse">
+            ❤️
+        </div>
+    </section>
+
+    <!-- Section 5: The Grand Finale -->
+    <section id="finale" class="love-section bg-gradient-to-br from-red-100 via-purple-100 to-pink-100 hidden">
+        <div class="flex flex-col items-center justify-center p-8 bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl border-4 border-red-400">
+            <h2 class="text-5xl md:text-6xl font-bold text-red-500 mb-4 font-['Parisienne']">My Dearest Love,</h2>
+            <p class="text-lg md:text-xl text-purple-700 max-w-2xl mt-4 font-['Parisienne']">
+                Before you, my life was a melody, but with you, it became a symphony. You have a way of making the ordinary extraordinary, and I still spoil your mood sometime, sorry for that baby. You are not just my partner, you are my best friend, my greatest adventure, and my safe harbor. My love for you grows with every passing moment, and I am so grateful to share my life with you. Today, and every day, you deserve all the happiness in the world. I love you so much that it'll be hard to unlove you now. And I know you'll achieve a big success in very soon days and will make all your loved one proud.
+            </p>
+            <h1 class="text-7xl md:text-8xl font-bold text-pink-500 glow-text drop-shadow-lg mt-8">Happy Birthday My Love.. 💕</h1>
+        </div>
+        <div class="fireworks-container absolute inset-0 pointer-events-none"></div>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll('section.love-section');
+        const bgMusic = document.getElementById('bg-music');
+        const secretMessageModal = document.getElementById('secret-message-modal');
+        const secretMessageText = document.getElementById('secret-message-text');
+
+        // Quiz elements
+        const quizContainer = document.getElementById('quiz-container');
+        const quizQuestions = ['quiz-q1', 'quiz-q2', 'quiz-q3'];
+        let currentQuestionIndex = 0;
+        const correctAnswers = {
+            'quiz-form-1': "Mall",
+            'quiz-form-2': "Perfect",
+            'quiz-form-3': "Money"
+        };
+        const quizForms = [
+            document.getElementById('quiz-form-1'),
+            document.getElementById('quiz-form-2'),
+            document.getElementById('quiz-form-3')
+        ];
+
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+        }
+
+        function startJourney() {
+            try {
+                bgMusic.play().catch(e => console.error('Music autoplay blocked:', e.message));
+            } catch (e) {
+                console.error('Music autoplay failed:', e.message);
+            }
+            showSection('story');
+            setTimeout(() => {
+                document.getElementById('story').scrollIntoView();
+            }, 50);
+        }
+
+        // Quiz Logic
+        quizForms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const input = form.querySelector('input');
+                const userAnswer = input.value.trim();
+                const correct = correctAnswers[form.id];
+                const messages = form.nextElementSibling;
+                const successMsg = messages.querySelector('.quiz-success');
+                const failureMsg = messages.querySelector('.quiz-failure');
+
+                successMsg.classList.add('hidden');
+                failureMsg.classList.add('hidden');
+
+                if (userAnswer.toLowerCase() === correct.toLowerCase()) {
+                    successMsg.classList.remove('hidden');
+                    currentQuestionIndex++;
+                    setTimeout(() => {
+                        if (currentQuestionIndex < quizQuestions.length) {
+                            document.getElementById(quizQuestions[currentQuestionIndex - 1]).classList.add('hidden');
+                            document.getElementById(quizQuestions[currentQuestionIndex]).classList.remove('hidden');
+                            input.value = ''; // Clear input for next question
+                        } else {
+                            document.getElementById('future').scrollIntoView();
+                            showSection('future');
+                        }
+                    }, 1000);
+                } else {
+                    failureMsg.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Secret Messages Modal
+        function showSecretMessage(message) {
+            secretMessageText.textContent = message;
+            secretMessageModal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            secretMessageModal.classList.add('hidden');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === secretMessageModal) {
+                closeModal();
+            }
+        }
+
+        // Falling Hearts Animation
+        function createFallingHearts() {
+            const heartsContainer = document.querySelector('.hearts-container');
+            if (!heartsContainer) return;
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDelay = `${-Math.random() * 15}s`;
+                heart.style.animationDuration = `${10 + Math.random() * 10}s`;
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Sparkle Animation
+        function createSparkles() {
+            const sparkleContainer = document.querySelector('.sparkle-container');
+            if (!sparkleContainer) return;
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.animationDelay = `${-Math.random() * 2}s`;
+                sparkle.style.animationDuration = `${1 + Math.random() * 2}s`;
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+
+        // Fireworks Animation (for Finale)
+        function createFireworks() {
+            const fireworksContainer = document.querySelector('.fireworks-container');
+            if (!fireworksContainer) return;
+            fireworksContainer.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = `${Math.random() * 100}vw`;
+                firework.style.top = `${Math.random() * 100}vh`;
+                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                fireworksContainer.appendChild(firework);
+                setTimeout(() => firework.remove(), 2000);
+            }
+            setInterval(() => {
+                createFireworks();
+            }, 3000); // Re-create fireworks every 3 seconds
+        }
+
+        // Initial setup on page load
+        window.onload = function() {
+            showSection('welcome');
+            createFallingHearts();
+            createSparkles();
+            document.getElementById('finale').addEventListener('mouseenter', createFireworks);
+        };
+    </script>
+</body>
+</html>
